@@ -8,7 +8,8 @@ import {
     FaTwitter,
     FaPaperPlane,
     FaUser,
-    FaComment
+    FaComment,
+    FaWhatsapp
 } from 'react-icons/fa';
 import './Contact.css';
 
@@ -20,8 +21,6 @@ const Contact = () => {
         message: ''
     });
 
-    const [status, setStatus] = useState('');
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({
             ...formData,
@@ -29,41 +28,16 @@ const Contact = () => {
         });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setStatus('sending');
 
-        // Use Vercel API route in production, local server in development
-        const apiUrl = window.location.hostname === 'localhost'
-            ? 'http://localhost:3001/api/contact'
-            : '/api/contact';
+        // Construct the mailto link with pre-filled data
+        const mailtoLink = `mailto:tech18arun@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+            `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+        )}`;
 
-        try {
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const data = await response.json();
-
-            if (response.ok && data.success) {
-                setStatus('success');
-                setFormData({ name: '', email: '', subject: '', message: '' });
-
-                // Clear success message after 5 seconds
-                setTimeout(() => setStatus(''), 5000);
-            } else {
-                setStatus('error');
-                setTimeout(() => setStatus(''), 5000);
-            }
-        } catch (error) {
-            console.error('Error sending message:', error);
-            setStatus('error');
-            setTimeout(() => setStatus(''), 5000);
-        }
+        // Open the user's email client
+        window.location.href = mailtoLink;
     };
 
     const contactInfo = [
@@ -71,19 +45,29 @@ const Contact = () => {
             icon: <FaEnvelope />,
             title: 'Email',
             value: 'tech18arun@gmail.com',
-            link: 'mailto:tech18arun@gmail.com'
+            link: 'mailto:tech18arun@gmail.com',
+            action: 'Send Email'
         },
         {
             icon: <FaPhone />,
             title: 'Phone',
             value: '+91 8608630388',
-            link: 'tel:+918608630388'
+            link: 'tel:+918608630388',
+            action: 'Call Now'
+        },
+        {
+            icon: <FaWhatsapp />,
+            title: 'WhatsApp',
+            value: '+91 8608630388',
+            link: 'https://wa.me/918608630388',
+            action: 'Chat on WhatsApp'
         },
         {
             icon: <FaMapMarkerAlt />,
             title: 'Location',
             value: 'Rasipuram, Namakkal, Tamil Nadu, India',
-            link: null
+            link: 'https://www.google.com/maps/search/?api=1&query=Rasipuram,Namakkal,Tamil+Nadu,India',
+            action: 'View on Map'
         }
     ];
 
@@ -103,7 +87,7 @@ const Contact = () => {
                             Get In <span className="text-gradient">Touch</span>
                         </h1>
                         <p className="page-description animate-fade-in-up">
-                            Have a project in mind? Let's discuss how I can help bring your ideas to life
+                            Click on any contact method below to reach me directly
                         </p>
                     </div>
                 </div>
@@ -116,32 +100,33 @@ const Contact = () => {
                         {/* Contact Info */}
                         <div className="contact-info-section">
                             <div className="info-header">
-                                <h2 className="info-title">Let's Talk</h2>
+                                <h2 className="info-title">Direct Contact</h2>
                                 <p className="info-description">
-                                    I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+                                    I'm always open to discussing new projects. Choose your preferred way to connect!
                                 </p>
                             </div>
 
                             <div className="contact-info-cards">
                                 {contactInfo.map((info, index) => (
-                                    <div key={index} className="info-card">
+                                    <a
+                                        key={index}
+                                        href={info.link}
+                                        className="info-card clickable-card"
+                                        target={info.title === 'Location' || info.title === 'WhatsApp' ? '_blank' : '_self'}
+                                        rel="noopener noreferrer"
+                                    >
                                         <div className="info-icon">{info.icon}</div>
                                         <div className="info-content">
                                             <h3 className="info-card-title">{info.title}</h3>
-                                            {info.link ? (
-                                                <a href={info.link} className="info-value">
-                                                    {info.value}
-                                                </a>
-                                            ) : (
-                                                <p className="info-value">{info.value}</p>
-                                            )}
+                                            <p className="info-value">{info.value}</p>
+                                            <span className="info-action">{info.action} →</span>
                                         </div>
-                                    </div>
+                                    </a>
                                 ))}
                             </div>
 
                             <div className="social-section">
-                                <h3 className="social-title">Connect With Me</h3>
+                                <h3 className="social-title">Social Profiles</h3>
                                 <div className="social-links-contact">
                                     {socialLinks.map((link, index) => (
                                         <a
@@ -164,6 +149,11 @@ const Contact = () => {
 
                         {/* Contact Form */}
                         <div className="contact-form-section">
+                            <div className="form-header">
+                                <h3>Send a Quick Message</h3>
+                                <p>This will open your default email app with the details filled in.</p>
+                            </div>
+
                             <form onSubmit={handleSubmit} className="contact-form">
                                 <div className="form-group">
                                     <label htmlFor="name" className="form-label">
@@ -232,23 +222,10 @@ const Contact = () => {
                                 <button
                                     type="submit"
                                     className="btn btn-primary btn-lg form-submit"
-                                    disabled={status === 'sending'}
                                 >
-                                    <span>{status === 'sending' ? 'Sending...' : 'Send Message'}</span>
+                                    <span>Open Email App</span>
                                     <FaPaperPlane />
                                 </button>
-
-                                {status === 'success' && (
-                                    <div className="success-message">
-                                        ✓ Message sent successfully! I'll get back to you soon.
-                                    </div>
-                                )}
-
-                                {status === 'error' && (
-                                    <div className="error-message">
-                                        ✗ Failed to send message. Please try again or email me directly at tech18arun@gmail.com
-                                    </div>
-                                )}
                             </form>
                         </div>
                     </div>
