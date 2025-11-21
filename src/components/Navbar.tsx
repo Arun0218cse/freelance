@@ -28,6 +28,7 @@ const Navbar = () => {
         { name: 'Portfolio', path: '/portfolio' },
         { name: 'Skills', path: '/skills' },
         { name: 'Testimonials', path: '/testimonials' },
+        { name: 'Edizo (Company)', path: 'https://www.edizo.in/' },
         { name: 'Contact', path: '/contact' },
     ];
 
@@ -44,14 +45,27 @@ const Navbar = () => {
 
                     <div className={`nav-links ${isOpen ? 'nav-links-open' : ''}`}>
                         {navLinks.map((link, index) => (
-                            <Link
-                                key={index}
-                                to={link.path}
-                                className={`nav-link ${location.pathname === link.path ? 'nav-link-active' : ''}`}
-                                style={{ animationDelay: `${index * 0.1}s` }}
-                            >
-                                {link.name}
-                            </Link>
+                            link.path.startsWith('http') ? (
+                                <a
+                                    key={index}
+                                    href={link.path}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="nav-link"
+                                    style={{ animationDelay: `${index * 0.1}s` }}
+                                >
+                                    {link.name}
+                                </a>
+                            ) : (
+                                <Link
+                                    key={index}
+                                    to={link.path}
+                                    className={`nav-link ${location.pathname === link.path ? 'nav-link-active' : ''}`}
+                                    style={{ animationDelay: `${index * 0.1}s` }}
+                                >
+                                    {link.name}
+                                </Link>
+                            )
                         ))}
                         <Link to="/contact" className="btn btn-primary nav-cta">
                             <FaEnvelope />

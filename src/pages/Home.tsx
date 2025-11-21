@@ -7,9 +7,12 @@ import {
     FaReact,
     FaNodeJs,
     FaArrowRight,
-    FaStar
+    FaStar,
+    FaGithub,
+    FaExternalLinkAlt,
+    FaQuoteLeft
 } from 'react-icons/fa';
-import { SiFlutter, SiMongodb, SiMysql, SiExpress } from 'react-icons/si';
+import { SiFlutter, SiMongodb, SiMysql, SiExpress, SiReact, SiNodedotjs } from 'react-icons/si';
 import './Home.css';
 
 const Home = () => {
@@ -34,6 +37,60 @@ const Home = () => {
         { icon: <SiExpress />, name: 'Express', color: '#000000' },
         { icon: <SiMongodb />, name: 'MongoDB', color: '#47A248' },
         { icon: <SiMysql />, name: 'MySQL', color: '#4479A1' },
+    ];
+
+    const recentProjects = [
+        {
+            id: 1,
+            title: 'E-Commerce Mobile App',
+            description: 'Full-featured e-commerce app with payment integration.',
+            image: '/flutter.png',
+            technologies: [<SiFlutter key="1" />, <SiNodedotjs key="2" />, <SiMongodb key="3" />],
+            github: '#',
+            live: '#'
+        },
+        {
+            id: 2,
+            title: 'Social Media Dashboard',
+            description: 'Analytics dashboard for social media management.',
+            image: '/react.png',
+            technologies: [<SiReact key="1" />, <SiNodedotjs key="2" />, <SiMongodb key="3" />],
+            github: '#',
+            live: '#'
+        },
+        {
+            id: 3,
+            title: 'Task Management System',
+            description: 'Comprehensive task management platform.',
+            image: '/backend.png',
+            technologies: [<SiReact key="1" />, <SiNodedotjs key="2" />, <SiMongodb key="3" />],
+            github: '#',
+            live: '#'
+        }
+    ];
+
+    const testimonials = [
+        {
+            name: 'Sarah Johnson',
+            role: 'CEO, TechStart Inc.',
+            image: '/developer.png',
+            rating: 5,
+            text: 'Arun delivered an exceptional Flutter app for our business. His attention to detail and technical expertise exceeded our expectations.',
+        },
+        {
+            name: 'Michael Chen',
+            role: 'Product Manager, InnovateCo',
+            image: '/developer.png',
+            rating: 5,
+            text: 'Working with Arun was a pleasure. He built our React dashboard with amazing UI/UX and delivered on time.',
+        },
+        {
+            name: 'Emily Rodriguez',
+            role: 'Founder, StartupHub',
+            image: '/developer.png',
+            rating: 5,
+            text: 'Arun transformed our backend infrastructure with Node.js and MongoDB. The system is fast, scalable, and exactly what we needed.',
+        }
     ];
 
     return (
@@ -139,6 +196,165 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Edizo Partnership Section */}
+            <section className="edizo-section section">
+                <div className="container">
+                    <div className="edizo-content glass-card">
+                        <div className="edizo-text">
+                            <div className="section-header text-left">
+                                <h2 className="section-title">
+                                    Proudly Part of <span className="text-gradient">Edizo</span>
+                                </h2>
+                                <p className="section-description">
+                                    Design. Develop. Deliver | Creative Services & Real-World Learning
+                                </p>
+                            </div>
+
+                            <p className="edizo-description">
+                                We are a comprehensive digital agency providing top-tier services in
+                                <strong> UI/UX Design</strong>, <strong>Web & App Development</strong>, and
+                                <strong> Branding</strong>. We also offer career-launching
+                                <strong> Internships</strong> for aspiring developers and designers.
+                            </p>
+
+                            <div className="edizo-features-grid">
+                                <div className="edizo-feature-item">
+                                    <FaCheckCircle className="feature-icon-small" />
+                                    <span>Professional Services</span>
+                                </div>
+                                <div className="edizo-feature-item">
+                                    <FaCheckCircle className="feature-icon-small" />
+                                    <span>Real-World Internships</span>
+                                </div>
+                                <div className="edizo-feature-item">
+                                    <FaCheckCircle className="feature-icon-small" />
+                                    <span>Expert Mentorship</span>
+                                </div>
+                            </div>
+
+                            <div className="edizo-actions">
+                                <a
+                                    href="https://www.edizo.in/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn btn-primary"
+                                >
+                                    <span>Visit Edizo.in</span>
+                                    <FaArrowRight />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            {/* Recent Projects Section */}
+            <section className="recent-projects section">
+                <div className="container">
+                    <div className="section-header text-center">
+                        <h2 className="section-title">
+                            Recent <span className="text-gradient">Projects</span>
+                        </h2>
+                        <p className="section-description">
+                            A glimpse of my latest work
+                        </p>
+                    </div>
+
+                    <div className="projects-grid-home">
+                        {recentProjects.map((project, index) => (
+                            <div
+                                key={project.id}
+                                className="project-card-home"
+                                style={{ animationDelay: `${index * 0.1}s` }}
+                            >
+                                <div className="project-image-home">
+                                    <img src={project.image} alt={project.title} />
+                                    <div className="project-overlay-home">
+                                        <div className="project-links-home">
+                                            <a href={project.github} className="project-link-home" aria-label="GitHub">
+                                                <FaGithub />
+                                            </a>
+                                            <a href={project.live} className="project-link-home" aria-label="Live Demo">
+                                                <FaExternalLinkAlt />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="project-content-home">
+                                    <h3 className="project-title-home">{project.title}</h3>
+                                    <p className="project-description-home">{project.description}</p>
+
+                                    <div className="project-tech-home">
+                                        {project.technologies.map((tech, idx) => (
+                                            <span key={idx} className="tech-badge-home">
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="text-center mt-xl">
+                        <Link to="/portfolio" className="btn btn-outline">
+                            <span>View All Projects</span>
+                            <FaArrowRight />
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonials Section */}
+            <section className="testimonials-section section">
+                <div className="container">
+                    <div className="section-header text-center">
+                        <h2 className="section-title">
+                            Client <span className="text-gradient">Stories</span>
+                        </h2>
+                        <p className="section-description">
+                            What people say about working with me
+                        </p>
+                    </div>
+
+                    <div className="testimonials-grid-home">
+                        {testimonials.map((testimonial, index) => (
+                            <div key={index} className="testimonial-card-home">
+                                <div className="quote-icon-home">
+                                    <FaQuoteLeft />
+                                </div>
+
+                                <div className="rating-home">
+                                    {[...Array(testimonial.rating)].map((_, i) => (
+                                        <FaStar key={i} className="star-icon-home" />
+                                    ))}
+                                </div>
+
+                                <p className="testimonial-text-home">{testimonial.text}</p>
+
+                                <div className="testimonial-author-home">
+                                    <img src={testimonial.image} alt={testimonial.name} className="author-image-home" />
+                                    <div className="author-info-home">
+                                        <h3 className="author-name-home">{testimonial.name}</h3>
+                                        <p className="author-role-home">{testimonial.role}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="text-center mt-xl">
+                        <Link to="/testimonials" className="btn btn-outline">
+                            <span>View All Testimonials</span>
+                            <FaArrowRight />
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
             {/* Technologies Section */}
             <section className="technologies section">
                 <div className="container">
@@ -192,7 +408,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-        </div>
+        </div >
     );
 };
 

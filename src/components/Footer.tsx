@@ -49,7 +49,7 @@ const Footer = () => {
                             </Link>
                             <p className="footer-description">
                                 Full-stack developer specializing in Flutter, React, Node.js, and modern database solutions.
-                                Let's build something amazing together!
+                                Proudly part of <a href="https://www.edizo.in/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>Edizo</a>.
                             </p>
                             <div className="social-links">
                                 {socialLinks.map((link, index) => (
